@@ -29,28 +29,33 @@ export function UploadForm() {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-10">
-      <h1 className="text-2xl font-semibold text-white">Upload a photo</h1>
-      <p className="mt-2 text-sm text-zinc-400">
-        Only photos with GPS in their EXIF are accepted. After upload, an AI description is
-        generated automatically in the background — it will be ready when you open the photo on
-        the map.
-      </p>
+    <div className="auth-mesh-bg min-h-[calc(100vh-3.5rem)] px-4 py-10">
+      <div className="glass-panel mx-auto max-w-lg rounded-2xl p-8">
+        <h1 className="text-2xl font-semibold tracking-tight text-white">Upload a photo</h1>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+          Only photos with GPS in their EXIF are accepted. After upload, an AI description is
+          generated automatically in the background.
+        </p>
 
-      <label className="mt-8 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-zinc-700 bg-zinc-900/50 px-6 py-14 hover:border-sky-600">
-        <span className="text-sm text-zinc-300">
-          {loading ? "Uploading… (AI description starts next)" : "Choose a JPEG, PNG, or HEIC file"}
-        </span>
-        <input
-          type="file"
-          accept="image/*"
-          className="sr-only"
-          disabled={loading}
-          onChange={onFileChange}
-        />
-      </label>
+        <label className="mt-8 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/15 bg-black/20 px-6 py-14 transition hover:border-sky-500/50 hover:bg-sky-500/5">
+          <span className="text-sm text-zinc-300">
+            {loading ? "Uploading… (AI description starts next)" : "Choose a JPEG, PNG, or HEIC file"}
+          </span>
+          <input
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            disabled={loading}
+            onChange={onFileChange}
+          />
+        </label>
 
-      {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
+        {error ? (
+          <p className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+            {error}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }

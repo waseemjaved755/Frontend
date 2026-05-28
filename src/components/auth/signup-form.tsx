@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { AuthShell } from "@/components/ui/auth-shell";
 import { createClient } from "@/lib/supabase/client";
 
 export function SignupForm() {
@@ -33,48 +34,54 @@ export function SignupForm() {
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-md flex-col justify-center px-4">
-      <h1 className="text-2xl font-semibold text-white">Create account</h1>
-      <p className="mt-2 text-sm text-zinc-400">Start pinning your photos on the map.</p>
-
-      <form onSubmit={onSubmit} className="mt-8 space-y-4">
-        <label className="block text-sm text-zinc-300">
+    <AuthShell
+      badge="Get started"
+      title="Create account"
+      subtitle="Upload photos with GPS and see them on your personal world map."
+      alternateAuth={{ label: "Sign in", href: "/login" }}
+    >
+      <form onSubmit={onSubmit} className="space-y-4">
+        <label className="block text-sm font-medium text-zinc-300">
           Email
           <input
             type="email"
             required
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white outline-none focus:border-sky-500"
+            className="input-glass mt-1.5"
+            placeholder="you@example.com"
           />
         </label>
-        <label className="block text-sm text-zinc-300">
+        <label className="block text-sm font-medium text-zinc-300">
           Password
           <input
             type="password"
             required
             minLength={8}
+            autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white outline-none focus:border-sky-500"
+            className="input-glass mt-1.5"
+            placeholder="At least 8 characters"
           />
         </label>
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-md bg-sky-600 py-2 text-sm font-medium text-white hover:bg-sky-500 disabled:opacity-60"
-        >
+        {error ? (
+          <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+            {error}
+          </p>
+        ) : null}
+        <button type="submit" disabled={loading} className="btn-primary !mt-5">
           {loading ? "Creating…" : "Sign up"}
         </button>
       </form>
 
-      <p className="mt-6 text-sm text-zinc-400">
+      <p className="mt-5 text-center text-sm text-zinc-500">
         Already have an account?{" "}
-        <Link href="/login" className="text-sky-400 hover:text-sky-300">
+        <Link href="/login" className="font-medium text-sky-400 hover:text-sky-300">
           Sign in
         </Link>
       </p>
-    </div>
+    </AuthShell>
   );
 }

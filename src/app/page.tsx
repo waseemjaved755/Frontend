@@ -23,7 +23,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="h-[calc(100vh-3.5rem)]">
+    <div className="h-screen w-full pt-14">
       <MapView />
     </div>
   );

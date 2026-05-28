@@ -221,10 +221,10 @@ export function PhotoLightbox({
       onClick={onClose}
     >
       <div
-        className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-zinc-700 bg-zinc-900 shadow-xl"
+        className="glass-panel max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-3 border-b border-zinc-800 px-4 py-3">
+        <div className="flex items-start justify-between gap-3 border-b border-white/10 px-5 py-4">
           <div className="min-w-0">
             <h2 className="truncate text-lg font-semibold text-white">
               {placeLoading && !placeName ? "Looking up location…" : (placeName ?? "Photo")}
@@ -253,7 +253,7 @@ export function PhotoLightbox({
         ) : error ? (
           <p className="p-6 text-sm text-red-400">{error}</p>
         ) : photo ? (
-          <div className="space-y-4 p-4">
+          <div className="space-y-4 p-5">
             <div className="relative min-h-[200px] overflow-hidden rounded-lg bg-zinc-950">
               {imageLoading ? (
                 <div className="flex min-h-[240px] items-center justify-center">

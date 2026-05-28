@@ -3,8 +3,280 @@
 
 :root {
   color-scheme: dark;
+  --accent: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.4);
 }
 
 body {
   margin: 0;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: #09090b;
+}
+
+/* —— Auth full page —— */
+.auth-page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background-color: #0a0a0f;
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -20%, rgba(56, 189, 248, 0.28), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 100% 50%, rgba(99, 102, 241, 0.15), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 0% 80%, rgba(14, 165, 233, 0.12), transparent 45%),
+    linear-gradient(180deg, #0c0c12 0%, #09090b 100%);
+}
+
+.auth-page__glow {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+}
+
+.auth-page__glow--left {
+  left: -10%;
+  top: 20%;
+  height: 280px;
+  width: 280px;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.auth-page__glow--right {
+  right: -5%;
+  bottom: 15%;
+  height: 240px;
+  width: 240px;
+  background: rgba(129, 140, 248, 0.1);
+}
+
+.auth-page__inner {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  display: flex;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 28rem;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .auth-page__inner {
+    padding: 1.75rem 1.5rem 2rem;
+  }
+}
+
+.auth-page__bar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+}
+
+.auth-page__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+  text-decoration: none;
+}
+
+.auth-page__logo {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+}
+
+.auth-page__nav-link {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #7dd3fc;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.auth-page__nav-link:hover {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.auth-page__center {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.auth-page__footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: rgba(113, 113, 122, 0.9);
+}
+
+/* —— Glass card (auth) —— */
+.glass-panel {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(15, 23, 42, 0.35) 100%
+  );
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.1) inset,
+    0 20px 50px -12px rgba(0, 0, 0, 0.65),
+    0 0 80px -20px rgba(56, 189, 248, 0.15);
+}
+
+.auth-card {
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .auth-card {
+    padding: 1.75rem;
+  }
+}
+
+.auth-card__badge {
+  display: inline-flex;
+  margin-bottom: 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.12);
+  padding: 0.25rem 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.auth-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #fff;
+}
+
+@media (min-width: 640px) {
+  .auth-card__title {
+    font-size: 1.625rem;
+  }
+}
+
+.auth-card__subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #a1a1aa;
+}
+
+.auth-card__body {
+  margin-top: 1.25rem;
+}
+
+/* —— Map toolbar glass —— */
+.glass-toolbar {
+  background: rgba(9, 9, 11, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.auth-mesh-bg {
+  background-color: #09090b;
+  background-image:
+    radial-gradient(ellipse 90% 70% at 10% -10%, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(ellipse 70% 60% at 95% 15%, rgba(129, 140, 248, 0.12), transparent 50%);
+}
+
+.input-glass {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.5625rem 0.75rem;
+  font-size: 0.875rem;
+  color: #fafafa;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-glass::placeholder {
+  color: #71717a;
+}
+
+.input-glass:focus {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+.btn-primary {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: none;
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.15) inset,
+    0 4px 20px rgba(56, 189, 248, 0.35);
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 6px 28px rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  color: #e4e4e7;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
 }
