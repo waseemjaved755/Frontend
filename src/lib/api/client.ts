@@ -49,6 +49,11 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     headers.Authorization = `Bearer ${options.token}`;
   }
 
+  // ngrok free tier: without this, preflight may get an HTML warning page (no CORS headers)
+  if (API_URL.includes("ngrok")) {
+    headers["ngrok-skip-browser-warning"] = "true";
+  }
+
   const response = await fetch(`${API_URL}${path}`, {
     method: options.method ?? "GET",
     headers,
