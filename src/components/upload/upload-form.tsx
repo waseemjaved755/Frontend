@@ -29,7 +29,7 @@ export function UploadForm() {
   }
 
   return (
-    <div className="auth-mesh-bg min-h-[calc(100vh-3.5rem)] px-4 py-10">
+    <div className="auth-mesh-bg min-h-[calc(100dvh-3.5rem)] px-4 pb-10 pt-[calc(3.5rem+2rem)] sm:px-6 sm:pt-[calc(3.5rem+2.5rem)]">
       <div className="glass-panel mx-auto max-w-lg rounded-2xl p-8">
         <h1 className="text-2xl font-semibold tracking-tight text-white">Upload a photo</h1>
         <p className="mt-2 text-sm leading-relaxed text-zinc-400">
