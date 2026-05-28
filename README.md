@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Photo Map — Frontend (Next.js)
 
-## Getting Started
-
-First, run the development server:
+## Local development
 
 ```bash
+npm install
+cp .env.example .env.local
+# Edit .env.local with your Supabase + API values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Import project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Root Directory:** `Frontend` (not the repo root)
+- **Framework:** Next.js (auto-detected)
+- **Build command:** `npm run build` (default)
+- **Install command:** `npm install` (default)
+
+### 2. Environment variables
+
+Set these in **Vercel → Project → Settings → Environment Variables** for **Production** (and Preview if you use preview deployments):
+
+| Variable | Example | Required |
+|----------|---------|----------|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` | Yes |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_...` | Yes |
+| `NEXT_PUBLIC_API_URL` | `https://your-api.example.com` | Yes — **not** `localhost` |
+| `NEXT_PUBLIC_STORAGE_BUCKET` | `Photos` | Yes — must match Supabase bucket name |
+
+`NEXT_PUBLIC_*` variables are embedded at **build time**. Redeploy after changing them.
+
+### 3. Supabase Auth (required for login)
+
+In Supabase → **Authentication → URL Configuration**:
+
+- **Site URL:** `https://your-app.vercel.app`
+- **Redirect URLs:** add  
+  `https://your-app.vercel.app/**`  
+  `http://localhost:3000/**` (for local dev)
+
+### 4. Backend CORS
+
+Your FastAPI backend must allow the Vercel origin:
+
+```env
+CORS_ORIGINS=https://your-app.vercel.app,http://localhost:3000
+```
+
+Redeploy or restart the API after updating.
+
+### 5. Verify before going live
+
+```bash
+cd Frontend
+npm run build
+npm run start
+```
+
+Build must pass with no TypeScript errors. Smoke-test: sign in, map loads (satellite), upload, open a photo marker.
+
+### 6. Optional checks
+
+- **Storage image transforms:** faster lightbox previews; falls back to full-size if unavailable.
+- **Nominatim geocoding:** place names load from the browser; respect [usage policy](https://operations.osmfoundation.org/policies/nominatim/) (fine for demos, not high traffic).
+
+## Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build (same as Vercel) |
+| `npm run start` | Run production build locally |
+| `npm run lint` | ESLint |
