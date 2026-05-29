@@ -1,4 +1,4 @@
-# Photo Map — Frontend (Next.js)
+# HyLight Demo — Frontend (Next.js)
 
 ## Local development
 
@@ -33,14 +33,16 @@ Set these in **Vercel → Project → Settings → Environment Variables** for *
 
 `NEXT_PUBLIC_*` variables are embedded at **build time**. Redeploy after changing them.
 
-### 3. Supabase Auth (required for login)
+### 3. Supabase Auth (login, signup, password reset)
 
 In Supabase → **Authentication → URL Configuration**:
 
 - **Site URL:** `https://your-app.vercel.app`
-- **Redirect URLs:** add  
+- **Redirect URLs:** add (wildcard covers callback + reset flow)  
   `https://your-app.vercel.app/**`  
   `http://localhost:3000/**` (for local dev)
+
+Password reset flow: user requests link at `/forgot-password` → email → `/auth/callback?next=/auth/reset-password` → set new password at `/auth/reset-password`.
 
 ### 4. Backend CORS
 
