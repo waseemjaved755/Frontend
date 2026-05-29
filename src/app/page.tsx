@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { MapView } from "@/components/map/map-view";
+import { MapPageClient } from "@/components/map/map-page-client";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 
@@ -24,7 +24,7 @@ export default async function HomePage() {
 
   return (
     <div className="h-screen w-full pt-14">
-      <MapView />
+      <MapPageClient />
     </div>
   );
 }

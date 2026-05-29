@@ -4,33 +4,37 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import {
+  AuthError,
+  AuthField,
+  AuthFooterLink,
+  AuthInput,
+} from "@/components/auth/auth-form-ui";
 import { AuthShell } from "@/components/ui/auth-shell";
+import { useAuthForm } from "@/hooks/use-auth-form";
 import { createClient } from "@/lib/supabase/client";
 
 export function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { error, loading, setError, run } = useAuthForm();
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
 
-    const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    await run(async () => {
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
 
-    setLoading(false);
+      if (signInError) {
+        setError(signInError.message);
+        return;
+      }
 
-    if (signInError) {
-      setError(signInError.message);
-      return;
-    }
-
-    router.push("/");
-    router.refresh();
+      router.push("/");
+      router.refresh();
+    });
   }
 
   return (
@@ -41,46 +45,41 @@ export function LoginForm() {
       alternateAuth={{ label: "Sign up", href: "/signup" }}
     >
       <form onSubmit={onSubmit} className="space-y-4">
-        <label className="block text-sm font-medium text-zinc-300">
-          Email
-          <input
+        <AuthField label="Email">
+          <AuthInput
             type="email"
             required
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="input-glass mt-1.5"
             placeholder="you@example.com"
           />
-        </label>
-        <label className="block text-sm font-medium text-zinc-300">
-          Password
-          <input
+        </AuthField>
+        <AuthField label="Password">
+          <AuthInput
             type="password"
             required
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="input-glass mt-1.5"
             placeholder="••••••••"
           />
-        </label>
-        {error ? (
-          <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
-            {error}
-          </p>
-        ) : null}
+        </AuthField>
+        <div className="flex justify-end">
+          <Link
+            href="/forgot-password"
+            className="text-xs font-medium text-sky-400 hover:text-sky-300"
+          >
+            Forgot password?
+          </Link>
+        </div>
+        {error ? <AuthError message={error} /> : null}
         <button type="submit" disabled={loading} className="btn-primary !mt-5">
           {loading ? "Signing in…" : "Sign in"}
         </button>
       </form>
 
-      <p className="mt-5 text-center text-sm text-zinc-500">
-        No account?{" "}
-        <Link href="/signup" className="font-medium text-sky-400 hover:text-sky-300">
-          Create one
-        </Link>
-      </p>
+      <AuthFooterLink text="No account?" linkText="Create one" href="/signup" />
     </AuthShell>
   );
 }

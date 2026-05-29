@@ -1,6 +1,6 @@
 import exifr from "exifr";
 
-import { apiRequest } from "@/lib/api/client";
+import { apiRequestAuth } from "@/lib/api/authenticated";
 import { createClient } from "@/lib/supabase/client";
 import type { PhotoUploadInitResponse } from "@/types/api";
 
@@ -44,19 +44,10 @@ export async function uploadGeotaggedPhoto(file: File): Promise<string> {
   }
 
   const supabase = createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session?.access_token) {
-    throw new Error("You must be signed in to upload.");
-  }
-
   const hash = await sha256Hex(file);
 
-  const init = await apiRequest<PhotoUploadInitResponse>("/v1/photos/upload-url", {
+  const init = await apiRequestAuth<PhotoUploadInitResponse>("/v1/photos/upload-url", {
     method: "POST",
-    token: session.access_token,
     body: {
       mime_type: file.type || "image/jpeg",
       size_bytes: file.size,
@@ -82,9 +73,8 @@ export async function uploadGeotaggedPhoto(file: File): Promise<string> {
     throw new Error(storageError.message);
   }
 
-  await apiRequest(`/v1/photos/${init.photo_id}/finalize`, {
+  await apiRequestAuth(`/v1/photos/${init.photo_id}/finalize`, {
     method: "POST",
-    token: session.access_token,
   });
 
   return init.photo_id;

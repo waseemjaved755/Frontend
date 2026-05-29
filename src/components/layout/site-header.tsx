@@ -28,44 +28,16 @@ export function SiteHeader({ email }: SiteHeaderProps) {
         isLoggedIn && "fixed left-0 right-0 top-0",
       )}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link
-          href={isLoggedIn ? "/" : "/login"}
-          className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight text-zinc-50"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-sky-500/30 bg-sky-500/15 text-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.2)] transition group-hover:border-sky-400/50">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="h-4 w-4"
-              aria-hidden
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 21c-4-4-8-7.5-8-11a8 8 0 1116 0c0 3.5-4 7-8 11z"
-              />
-              <circle cx="12" cy="10" r="2.5" />
-            </svg>
-          </span>
-          <span>HyLight Demo</span>
-        </Link>
-
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-end px-4 sm:px-6">
         <nav className="flex items-center gap-2 text-sm sm:gap-4">
           {isLoggedIn ? (
             <>
-              <Link
-                href="/upload"
-                className="hidden rounded-lg px-3 py-1.5 text-zinc-300 transition hover:bg-white/5 hover:text-white sm:inline"
-              >
+              <Link href="/upload" className="glass-nav-link hidden sm:inline">
                 Upload
               </Link>
               <Link
                 href="/upload"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:bg-white/10 hover:text-white sm:hidden"
+                className="glass-inset inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-300 transition hover:text-white sm:hidden"
                 aria-label="Upload"
               >
                 <svg
@@ -87,10 +59,7 @@ export function SiteHeader({ email }: SiteHeaderProps) {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="rounded-lg px-3 py-1.5 text-zinc-300 transition hover:bg-white/5 hover:text-white"
-            >
+            <Link href="/login" className="glass-nav-link">
               Sign in
             </Link>
           )}

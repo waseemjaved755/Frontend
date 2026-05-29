@@ -18,6 +18,21 @@ export type MapPhotosResponse = {
   count: number;
 };
 
+export type PhotoListItem = {
+  id: string;
+  lat: number;
+  lng: number;
+  thumb_key: string | null;
+  ai_description: string | null;
+  ai_status: string;
+  created_at: string;
+};
+
+export type PhotoListResponse = {
+  photos: PhotoListItem[];
+  count: number;
+};
+
 export type PhotoUploadInitResponse = {
   photo_id: string;
   storage_path: string;

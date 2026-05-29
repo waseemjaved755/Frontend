@@ -37,7 +37,7 @@ export function UploadForm() {
           generated automatically in the background.
         </p>
 
-        <label className="mt-8 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/15 bg-black/20 px-6 py-14 transition hover:border-sky-500/50 hover:bg-sky-500/5">
+        <label className="glass-inset mt-8 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/20 px-6 py-14 transition hover:border-sky-500/50 hover:bg-sky-500/10">
           <span className="text-sm text-zinc-300">
             {loading ? "Uploading… (AI description starts next)" : "Choose a JPEG, PNG, or HEIC file"}
           </span>
